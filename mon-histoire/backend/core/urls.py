@@ -19,14 +19,18 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
+from django.views.generic.base import RedirectView
 
 def home(request):
-    return HttpResponse("<h1>Mon Histoire API Backend</h1><p>Le serveur est en ligne.</p>")
+    return HttpResponse("<h1>Mon Histoire API Backend</h1><p>Le serveur est en ligne et connecté à Vercel Postgres.</p>")
 
 urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
+    # Redirect favicons to avoid 404 logs
+    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
+    path('favicon.png', RedirectView.as_view(url='/static/favicon.png')),
 ]
 
 if settings.DEBUG:

@@ -73,13 +73,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # ─── Database — Postgres (Vercel) / SQLite (Local) ──────────
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        ssl_require=True if os.environ.get('POSTGRES_URL') else False
-    )
-}
+if os.environ.get('POSTGRES_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            env='POSTGRES_URL',
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # ─── Auth ─────────────────────────────────────────────────────
 AUTH_PASSWORD_VALIDATORS = [
@@ -102,8 +110,8 @@ CORS_ALLOW_CREDENTIALS = True
 
 # ─── Static & Media ──────────────────────────────────────────
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] # Create this if needed
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root') # Use distinct name to avoid confusion
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
