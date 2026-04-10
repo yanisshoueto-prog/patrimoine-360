@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply antialiased font-sans transition-colors duration-700;
+  }
+
+  /* Dark mode — root class based */
+  .dark body,
+  .dark {
+    background-color: #120804;
+    color: #F6F2EC;
+  }
+
+  /* Light mode */
+  body {
+    background-color: #F6F2EC;
+    color: #120804;
+  }
+}
+
+/* Glass variants */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.dark .glass-panel {
+  background: rgba(42, 20, 10, 0.4);
+  border-color: rgba(212, 175, 55, 0.10);
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.04);
+}
+
+.glass-panel-dark {
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(18, 8, 4, 0.15);
+}
+
+.dark .glass-panel-dark {
+  background: rgba(12, 5, 2, 0.6);
+  border-color: rgba(212, 175, 55, 0.15);
+}
+
+/* Organic shape */
+.organic-shape {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morph 8s ease-in-out infinite both alternate;
+}
+
+@keyframes morph {
+  0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+
+/* Touch targets — mobile ergonomics */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
+  }
+}
+
+/* Selection color */
+::selection {
+  background: rgba(212, 175, 55, 0.25);
+  color: #D4AF37;
+}
